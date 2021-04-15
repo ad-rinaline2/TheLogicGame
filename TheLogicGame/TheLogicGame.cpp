@@ -4,7 +4,7 @@
 int main(int argc, char const* argv[])
 {
 	//sf:: is like std::
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Game");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Logic Game");
 	window.setFramerateLimit(60); //For set frame rate games
 
 	window.setKeyRepeatEnabled(false);
@@ -33,7 +33,7 @@ int main(int argc, char const* argv[])
 
 	bool space = false, enter = false;
 
-	bool leftClick = false, rightClick = true;
+	bool leftClick = false, rightClick = false;
 
 	//Variable
 	int numClicks = 0;
