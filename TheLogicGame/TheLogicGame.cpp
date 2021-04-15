@@ -1,15 +1,17 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 int main(int argc, char const* argv[])
 {
 	//sf:: is like std::
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Logic Game");
+	sf::RenderWindow window(sf::VideoMode(600, 500), "Logic Game"); //Setting the window
 	window.setFramerateLimit(60); //For set frame rate games
 
 	window.setKeyRepeatEnabled(false);
 
-	/*/Default SFML to show window screen
+	//Default SFML to show window screen
+#if BREAK
 	sf::CircleShape shape(100.f);
 
 	shape.setFillColor(sf::Color::Blue);
@@ -24,16 +26,19 @@ int main(int argc, char const* argv[])
 		window.clear();
 		window.draw(shape);
 		window.display();
-	}*/
+	}
+#endif
 
 	//The states for button or event
 	bool playGame = true;
 
 	bool setPressed = false, setReleased = false;
 
-	bool space = false, enter = false;
+	bool space = false, returnReleased = false;
 
 	bool leftClick = false, rightClick = false;
+
+	bool leftPressed = false, rightPressed = false;
 
 	//Variable
 	int numClicks = 0;
@@ -58,18 +63,19 @@ int main(int argc, char const* argv[])
 				setReleased = true;
 			}
 
-			//Space
+			//Key space pressed
 			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
 				space = true;
 			}
 
+			//Key space released
 			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
 				space = false;
 			}
 
-			//Enter released
-			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) {
-				enter = true;
+			//Enter or return released
+			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Return) {
+				returnReleased = true;
 			}
 
 			//Left click mouse
@@ -82,13 +88,33 @@ int main(int argc, char const* argv[])
 				rightClick = true;
 			}
 
-			//Mouse move
+			//Mouse move position
 			if (event.type == sf::Event::MouseMoved) {
 				mouseX = event.mouseMove.x;
 				mouseY = event.mouseMove.y;
 			}
 
-			//Close the loop
+			//Left pressed 
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left) {
+				leftPressed = true;
+			}
+
+			//Right pressed
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right) {
+				rightPressed = true;
+			}
+
+			//Left released
+			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left) {
+				leftPressed = false;
+			}
+
+			//Right released
+			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right) {
+				rightPressed = false;
+			}
+
+			//Close the game loop
 			if (event.type == sf::Event::Closed) {
 				playGame = false;
 			}
@@ -108,37 +134,57 @@ int main(int argc, char const* argv[])
 			setReleased = false;
 		}
 
-		//Enter released
-		if (enter == true) {
-			std::cout << "Entered has been released \n";
+		//Enter or return released
+		if (returnReleased == true) {
+			std::cout << "Enter or return has been released \n";
+
+			returnReleased = false;
 		}
 
-		//Mouse click
+		//Mouse click left
 		if (leftClick == true) {
 			numClicks++; //Increase the numbers of left clicks by 1
 
 			std::cout << "Number of left clicks " << numClicks << "\n";
 
-			leftClick = false;
+			//It's gonna close the window when mouse click less than 200 from x coordinate or position
+			if (mouseX < 200) {
+
+				playGame = false;
+			}
+
+			leftClick = false; //Not print the next frame
 		}
 
+		//Mouse right
 		if (rightClick == true) {
 			numClicks--; //Decrease the number of right clicks by 1
+
 			std::cout << "Number of right clicks is " << numClicks << "\n";
 
 			rightClick = false;
 		}
 
-		//std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
-
-		/*/Space
-		if (space == true) {
-			std::cout << "Space \n";
+		if (leftPressed == true && rightPressed == true) {
+			std::cout << "The left and right key has been pressed \n";
 		}
 
-		if (space == false) {
+		//Space
+		if (space == true) {
+			std::cout << "Space \n";
+
+			space = false;
+		}
+
+		if (space == true) {
 			std::cout << "Not space \n";
-		}*/
+			
+			space = false;
+		}
+
+#if STOP
+		std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
+#endif
 
 		//Rendering
 		window.clear();
