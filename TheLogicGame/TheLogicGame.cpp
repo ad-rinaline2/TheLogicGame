@@ -4,14 +4,14 @@
 
 int main(int argc, char const* argv[])
 {
-	//sf:: is like std::
-	sf::RenderWindow window(sf::VideoMode(600, 500), "Logic Game"); //Setting the window
+	//sf:: is like std:: in general C++
+	sf::RenderWindow window(sf::VideoMode(600, 500), "Logic Game And Render"); //Setting the window name and size
 	window.setFramerateLimit(60); //For set frame rate games
 
 	window.setKeyRepeatEnabled(false);
 
-	//Default SFML to show window screen
 #if BREAK
+	//Default SFML code to show window screen
 	sf::CircleShape shape(100.f);
 
 	shape.setFillColor(sf::Color::Blue);
@@ -42,10 +42,23 @@ int main(int argc, char const* argv[])
 
 	//Variable
 	int numClicks = 0;
-	int mouseX, mouseY;
+	int mouseX = 0, mouseY = 0;
+	int rectangleXPosition = 0, circleXPosition = 0;
 
 	//Event object for holding the all event
 	sf::Event event;
+
+	//Rendering rectangle shapes 
+	sf::RectangleShape rectangle;
+	rectangle.setSize(sf::Vector2f(200, 150));
+	rectangle.setPosition(350, 100);
+	rectangle.setFillColor(sf::Color::Magenta);
+
+	//Circle shapes
+	sf::CircleShape circle;
+	circle.setRadius(100);
+	circle.setPosition(200, 280);
+	circle.setFillColor(sf::Color::Yellow);
 
 	//The game loop
 	while (playGame == true)
@@ -182,12 +195,22 @@ int main(int argc, char const* argv[])
 			space = false;
 		}
 
-#if STOP
 		std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
-#endif
+
+		//Increase the rectangle X position
+		rectangleXPosition++;
+		rectangle.setPosition(rectangleXPosition, rectangleXPosition);
+		
+		circleXPosition++;
+		circle.setPosition(circleXPosition, 0);
 
 		//Rendering
 		window.clear();
+
+		//Set the render shapes
+		window.draw(rectangle);
+		window.draw(circle);
+
 		window.display();
 	}
 
