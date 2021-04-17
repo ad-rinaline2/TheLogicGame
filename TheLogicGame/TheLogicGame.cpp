@@ -1,11 +1,10 @@
-#pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 int main(int argc, char const* argv[])
 {
 	//sf:: is like std:: in general C++
-	sf::RenderWindow window(sf::VideoMode(600, 500), "Logic Game And Render"); //Setting the window name and size
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Logic Game And Rendering Images"); //Setting the window name and size
 	window.setFramerateLimit(60); //For set frame rate games
 
 	window.setKeyRepeatEnabled(false);
@@ -45,20 +44,28 @@ int main(int argc, char const* argv[])
 	int mouseX = 0, mouseY = 0;
 	int rectangleXPosition = 0, circleXPosition = 0;
 
+	//Load assets images
+	sf::Texture Image;
+	//This can change the assets images
+	if (Image.loadFromFile("Assets/BeeImage.png") == -1) { //Load images if not close the window program
+		return 1;
+	}
+	
 	//Event object for holding the all event
 	sf::Event event;
 
-	//Rendering rectangle shapes 
+	//Rendering rectangle shapes and assets images
 	sf::RectangleShape rectangle;
 	rectangle.setSize(sf::Vector2f(200, 150));
 	rectangle.setPosition(350, 100);
-	rectangle.setFillColor(sf::Color::Magenta);
+	rectangle.setFillColor(sf::Color::White); //Change to color white when load assets
+	rectangle.setTexture(&Image); //Change the image name
 
 	//Circle shapes
 	sf::CircleShape circle;
 	circle.setRadius(100);
 	circle.setPosition(200, 280);
-	circle.setFillColor(sf::Color::Yellow);
+	circle.setFillColor(sf::Color::Magenta);
 
 	//The game loop
 	while (playGame == true)
@@ -202,7 +209,7 @@ int main(int argc, char const* argv[])
 		rectangle.setPosition(rectangleXPosition, rectangleXPosition);
 		
 		circleXPosition++;
-		circle.setPosition(circleXPosition, 0);
+		circle.setPosition(circleXPosition, 50);
 
 		//Rendering
 		window.clear();
