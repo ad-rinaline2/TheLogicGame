@@ -3,7 +3,6 @@
 
 int main(int argc, char const* argv[])
 {
-	//sf:: is like std:: in general C++
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Logic Game And Rendering Images"); //Setting the window name and size
 	window.setFramerateLimit(60); //For set frame rate games
 
@@ -40,16 +39,32 @@ int main(int argc, char const* argv[])
 	bool leftPressed = false, rightPressed = false;
 
 	//Variable
-	int numClicks = 0;
-	int mouseX = 0, mouseY = 0;
-	int rectangleXPosition = 0, circleXPosition = 0;
+	float numClicks = 0;
+	float mouseX = 0, mouseY = 0;
+	float rectangleXPosition = 0, circleXPosition = 0;
 
 	//Load assets images
 	sf::Texture Image;
 	//This can change the assets images
-	if (Image.loadFromFile("Assets/BeeImage.png") == -1) { //Load images if not close the window program
+	if (Image.loadFromFile("Assets/Images/BeeImage.png") == 0) { //Load images if not close the window program
 		return 1;
 	}
+
+	//Load fonts from file
+	sf::Font fonts;
+
+	if (fonts.loadFromFile("Assets/Fonts/FiraCode-Bold.ttf") == 0) {
+		return 1;
+	}
+
+	//Set text object
+	sf::Text texts;
+
+	texts.setFont(fonts);
+	texts.setCharacterSize(40);
+	texts.setString("Billy Franscois");
+	texts.setPosition(250, 55);
+	texts.setFillColor(sf::Color::Blue);
 	
 	//Event object for holding the all event
 	sf::Event event;
@@ -110,8 +125,8 @@ int main(int argc, char const* argv[])
 
 			//Mouse move position
 			if (event.type == sf::Event::MouseMoved) {
-				mouseX = event.mouseMove.x;
-				mouseY = event.mouseMove.y;
+				mouseX = (event.mouseMove.x);
+				mouseY = (event.mouseMove.y);
 			}
 
 			//Left pressed 
@@ -205,10 +220,10 @@ int main(int argc, char const* argv[])
 		std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
 
 		//Increase the rectangle X position
-		rectangleXPosition++;
+		(rectangleXPosition++);
 		rectangle.setPosition(rectangleXPosition, rectangleXPosition);
 		
-		circleXPosition++;
+		(circleXPosition++);
 		circle.setPosition(circleXPosition, 50);
 
 		//Rendering
@@ -217,6 +232,9 @@ int main(int argc, char const* argv[])
 		//Set the render shapes
 		window.draw(rectangle);
 		window.draw(circle);
+
+		//Render the texts font
+		window.draw(texts);
 
 		window.display();
 	}
