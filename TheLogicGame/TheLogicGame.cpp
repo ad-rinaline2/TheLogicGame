@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <SFML/audio.hpp>
 
 int main(int argc, char const* argv[])
 {
@@ -81,6 +82,33 @@ int main(int argc, char const* argv[])
 	circle.setRadius(100);
 	circle.setPosition(200, 280);
 	circle.setFillColor(sf::Color::Magenta);
+
+	//Import game sound effects
+	sf::SoundBuffer soundAffectBuffer;
+
+	if (soundAffectBuffer.loadFromFile("Assets/SoundEffects/chop.ogg") == 0) {
+		return 1;
+	}
+
+	sf::SoundBuffer sound;
+
+	if (sound.loadFromFile("Assets/SoundEffects/creak1.ogg") == 0) {
+		return 1;
+	}
+
+	sf::Sound pSound;
+	pSound.setBuffer(sound);
+	pSound.setLoop(true);
+	pSound.setVolume(50);
+	pSound.play();
+
+	//Play the game sound effect
+	sf::Sound soundAffect;
+
+	soundAffect.setBuffer(soundAffectBuffer);
+	soundAffect.setLoop(true);
+	soundAffect.setVolume(90);
+	soundAffect.play();
 
 	//The game loop
 	while (playGame == true)
