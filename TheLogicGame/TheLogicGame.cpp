@@ -66,7 +66,7 @@ int main(int argc, char const* argv[])
 	texts.setString("Billy Franscois");
 	texts.setPosition(250, 55);
 	texts.setFillColor(sf::Color::Blue);
-	
+
 	//Event object for holding the all event
 	sf::Event event;
 
@@ -109,6 +109,17 @@ int main(int argc, char const* argv[])
 	soundAffect.setLoop(true);
 	soundAffect.setVolume(90);
 	soundAffect.play();
+
+	//Load the music
+	sf::Music musicGame;
+
+	if (musicGame.openFromFile("The path music location here")/*bug == 0*/) {
+		return 1;
+	}
+
+	musicGame.setLoop(true);
+	musicGame.setVolume(60);
+	musicGame.play();
 
 	//The game loop
 	while (playGame == true)
@@ -241,7 +252,7 @@ int main(int argc, char const* argv[])
 
 		if (space == true) {
 			std::cout << "Not space \n";
-			
+
 			space = false;
 		}
 
@@ -250,7 +261,7 @@ int main(int argc, char const* argv[])
 		//Increase the rectangle X position
 		(rectangleXPosition++);
 		rectangle.setPosition(rectangleXPosition, rectangleXPosition);
-		
+
 		(circleXPosition++);
 		circle.setPosition(circleXPosition, 50);
 
