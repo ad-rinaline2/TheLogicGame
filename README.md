@@ -4,6 +4,6 @@
 
 ### Get the open source and free assets.
 
-> * [Sound effects from here] (www.kenney.nl) 
+> * Sound effects from here (www.kenney.nl). 
 
 <i> © Billy Franscois </i>
