@@ -4,29 +4,10 @@
 
 int main(int argc, char const* argv[])
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Logic Game And Rendering Images"); //Setting the window name and size
+	sf::RenderWindow window(sf::VideoMode(700, 500), "Logic Game And Rendering Images"); //Setting the window name and size
 	window.setFramerateLimit(60); //For set frame rate games
 
 	window.setKeyRepeatEnabled(false);
-
-#if BREAK
-	//Default SFML code to show window screen
-	sf::CircleShape shape(100.f);
-
-	shape.setFillColor(sf::Color::Blue);
-
-	while (window.isOpen()) {
-		sf::Event event;
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		window.clear();
-		window.draw(shape);
-		window.display();
-	}
-#endif
 
 	//The states for button or event
 	bool playGame = true;
